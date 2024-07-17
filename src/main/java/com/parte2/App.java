@@ -1,35 +1,34 @@
 package com.parte2;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public final class App {
-
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Tablero p = new Tablero();
-        String[][] mapa = p.iniciarTablero(10, 10);
-        boolean bucle = true;
-        while (bucle) {
-            try {
-                System.out.println("Ingrese la fila (1 - 10)");
-                int x = scanner.nextInt();
-                System.out.println("Ingrese la columna (1 - 10)");
-                int y = scanner.nextInt();
+        Ticketsys t = new Ticketsys();
+        List<Ticketsys> baseDeDatos = new ArrayList<Ticketsys>();
+        Ticketsys t1 = new Ticketsys(1, 1, new Date(), new Date(), 100);
+        Ticketsys t2 = new Ticketsys(2, 1, new Date(), new Date(), 100);
+        Ticketsys t3 = new Ticketsys();
 
-                p.elegir(mapa, x - 1, y - 1);
-                p.imprimir(mapa);
+        t3.setAsiento(3);
+        t3.setFila(5);
+        t3.setFechaCompra(new Date());
+        t3.setFechaValidez(new Date());
+        t3.setPrecio(100);
 
-            } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
-            }
+        baseDeDatos.add(t1);
+        baseDeDatos.add(t2);
+        baseDeDatos.add(t3);
 
-            System.out.println("Desea continuar? (s/n)");
-            String continuar = scanner.next();
-            if (continuar.equals("n".toLowerCase())) {
-                bucle = false;
-            }
-        }
+        t.calcularTotal(baseDeDatos);
 
-        scanner.close();
+        Scanner esc = new Scanner(System.in);
+        System.out.println("Ingrese la fila");
+        int numFila = esc.nextInt();
+        t.tickerPorFila(baseDeDatos, numFila);
+        esc.close();
     }
 }
